@@ -4,9 +4,11 @@ import chess
 #code tour de jeu
 
 
-if __name__ == '__main__' :
 
+if __name__ == '__main__' :
+    
     board = chess.Board()
+    board.reset_board()
     print(board)
     numero_tour_joueur = 0
     coup_joueur_blanc = None
@@ -28,7 +30,7 @@ if __name__ == '__main__' :
 
 
     if mode_jcj == 1 :
-        while board.is_checkmate() == False :
+        while board.is_checkmate() == False and board.is_stalemate() == False and board.is_insufficient_material() == False and board.is_seventyfive_moves() == False and board.is_fivefold_repetition() == False :
     
             if numero_tour_joueur%2 == 0 :
                 print("C'est au tour des blancs")
