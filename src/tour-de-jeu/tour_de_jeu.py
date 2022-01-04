@@ -1,6 +1,7 @@
 
 
 import chess
+#code tour de jeu
 
 
 if __name__ == '__main__' :
@@ -14,6 +15,7 @@ if __name__ == '__main__' :
     joueur_est_blanc = 1
     coup_joueur = None
     choix_mode = None
+    i = 0
 
     while choix_mode != 'y' and choix_mode != 'n' :
         print('Etes vous deux joueurs ? y/n')
@@ -40,9 +42,9 @@ if __name__ == '__main__' :
             i = i+1
 
         if i % 2 == 1 :
-            print('victoire du joueur noir')
-        else  :
             print('victoire du joueur blanc')
+        else  :
+            print('victoire du joueur noir')
 
     else :
         if joueur_est_blanc == 1 :
@@ -61,9 +63,9 @@ if __name__ == '__main__' :
                 i = i+1
 
             if i % 2 == 1 :
-                print('victoire du joueur noir')
-            else  :
                 print('victoire du joueur blanc')
+            else  :
+                print('victoire du joueur noir')
         else :
             while board.is_checkmate() == False :
 
