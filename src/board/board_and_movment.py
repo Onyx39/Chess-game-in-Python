@@ -8,8 +8,7 @@ class PolyBoard:
         self.board = chess.Board()
         #board de base : chess.Board('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
         self.printBanner()
-        self.board.legal_moves   #??????????
-        self.mode = choixMode()#TODO
+        self.mode = choixMode()
         self.WHITE = chess.WHITE
         self.BLACK = chess.BLACK
 
@@ -54,8 +53,6 @@ class PolyBoard:
       
 
     def detect_echec(self):
-        #if self.board.is_checkmate() == False and self.board.is_check() == False: #DO nothing so rm 
-        #    print('La partie continue')
         if self.board.is_checkmate() == False and self.board.is_check() == True:
             print('Echec')
             return self.endGame()
