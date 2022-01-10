@@ -92,8 +92,6 @@ class PolyBoard:
 
         #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())
-
-        print(p)
         if p != (None, None) :
             if self.getTurn() == self.WHITE:
                 print("\n les blancs ont prit une piece")
