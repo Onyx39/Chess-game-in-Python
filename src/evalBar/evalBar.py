@@ -1,9 +1,15 @@
 import chess
 import chess.engine
+import platform
+import os
 
 class Eval:
     def __init__(self):
-        self.engine = chess.engine.SimpleEngine.popen_uci(r"/tmp/stockfish")
+        if platform.system()=='Linux':
+            self.engine = chess.engine.SimpleEngine.popen_uci(os.path.abspath("./src/evalBar/stockfish"))
+        else:
+            self.engine = chess.engine.SimpleEngine.popen_uci(os.path.abspath(\
+                "./src/evalBar/stockfish_14.1_win_x64_avx2/stockfish_14.1_win_x64_avx2.exe"))
 
     def betterScore(self, res):
         if res.relative > chess.engine.Cp(0): 
