@@ -1,6 +1,7 @@
 
 import chess
 
+
 def Reduction_str_Board(board) :
     b = board.epd()
     l = []
@@ -20,8 +21,8 @@ def Affichage_cases_vides (n) :
     return l
 
 
-def TransformationenMatrice(board) :        #TRANSFORMER LA STR EN MATRICE 
-    b = Reduction_str_Board(board)
+def TransformationenMatrice(pboard) :        #TRANSFORMER LA STR EN MATRICE 
+    b = Reduction_str_Board(pboard.board)
     mat_board = []
     n=0
     
@@ -41,10 +42,11 @@ def TransformationenMatrice(board) :        #TRANSFORMER LA STR EN MATRICE
 
     return mat_board
 
-def AffichagePiecesPrises(board, mouvement, b_transforme, compteur_tour) :
+def AffichagePiecesPrises(board, mouvement, b_transforme, tour_joueur_blanc) :
     
     l = 0
     col = 0
+
     joueur_noir_piece_blanche_prise = None
     joueur_blanc_piece_noire_prise = None
 
@@ -69,37 +71,41 @@ def AffichagePiecesPrises(board, mouvement, b_transforme, compteur_tour) :
     
 
     if b_transforme[l][col] == '.' : # board.is_en_passant(chess.Move(mouvement)) == False :
-        return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+        return joueur_blanc_piece_noire_prise, joueur_noir_piece_blanche_prise
     else : 
         if False and board.is_en_passant(chess.Move(mouvement)) == True :
             if compteur_tour %2 == 1 :
                 piece_blanche_prise = b_transforme[l][col]
             else :
                 piece_noire_prise = b_transforme[l+1][col] 
-        elif compteur_tour %2 == 1 :
+        #if board.getTurn() == PolyBoard.BLACK:
+        if tour_joueur_blanc == False :
             if b_transforme[l][col] == 'r' :
-                return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+                return joueur_blanc_piece_noire_prise, joueur_noir_piece_blanche_prise
             else :
                 joueur_noir_piece_blanche_prise = b_transforme[l][col]
         else :
             if b_transforme[l][col] == 'R' :
-                return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+                return joueur_blanc_piece_noire_prise, joueur_noir_piece_blanche_prise
             else :
                 joueur_blanc_piece_noire_prise = b_transforme[l][col]
 
-    return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+    return joueur_blanc_piece_noire_prise, joueur_noir_piece_blanche_prise
 
 
 if __name__ == '__main__' :
     
     #TEST TRANSFORMATION MATRICE ET AFFICHAGE DES PIECES PRISE MOUVEMENT SIMPLE
-
-    board = chess.Board("r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4")
+    '''
+    board = chess.Board()
     b = TransformationenMatrice(board)
+    board = chess.Board("r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4")
     print(board.epd())
     print(Reduction_str_Board(board))
     print(Affichage_cases_vides(6))
     print(TransformationenMatrice(board))
-    print(AffichagePiecesPrises(board, 'e3a1', b, 1)[0])
-    print(AffichagePiecesPrises(board, 'e3a1', b, 1)[1])
-    
+    print(AffichagePiecesPrises(board, 'e3a1', b, 1, False))
+    print(AffichagePiecesPrises(board, 'e3a1', b, 1, False))
+    print(AffichagePiecesPrises(board, 'e3a1', b, 1, True))
+    print(AffichagePiecesPrises(board, 'e3a1', b, 1, True))
+    '''

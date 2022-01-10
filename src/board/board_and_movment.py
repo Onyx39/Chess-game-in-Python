@@ -1,6 +1,7 @@
 import chess
 from choixMode.choixMode import choixMode
 import tourDeJeu.tourDeJeu as tdj
+from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
 
 class PolyBoard:
 
@@ -75,7 +76,7 @@ class PolyBoard:
                     print("Ce coup n'est pas valide ! \n les coups valides sont : ")
                     print(self.board.legal_moves)
                 coup = input()
-                print(coup)
+                #print(coup)
                 askAgain = True
                 if coup == "undo" and self.board.fullmove_number > 1: return "undo"
         except ValueError: #hacky way to do things, but it works
@@ -84,14 +85,29 @@ class PolyBoard:
         return coup
 
 
-    def move_piece(self):
+    def move_piece(self, pieces_noires_prises, pieces_blanches_prises):
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
         coup = self.ask_move_piece()
+
+        #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
+        p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())
+
+        print(p)
+        if p != (None, None) :
+            if self.getTurn() == self.WHITE:
+                print("\n les blancs ont prit une piece")
+                pieces_noires_prises.append(p[0])
+            elif self.getTurn() == self.BLACK:
+                print("\n les noirs ont prit une piece")
+                pieces_blanches_prises.append(p[1])
+
+
+
         if coup == "undo": self.coup_precedent()
         self.board.push_san(coup)
-        print(self.affichage_plateau())
         self.detect_echec()
+        
 
 
     def coup_precedent(self):
@@ -117,11 +133,17 @@ class PolyBoard:
         return True
 
     def playGame(self):
+        pieces_noires_prises =[]
+        pieces_blanches_prises = []
         while not self.isGameFinished():
             assert self.board.is_valid()
             self.affichage_plateau()
+            tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
+            print('pieces noires prises par les blancs')
+            print(pieces_noires_prises)
+            print('pieces blanches prises par les noirs')
+            print(pieces_blanches_prises)
 
-            tdj.tourJeu(self)
 
     def printBanner(self):
         print("")
