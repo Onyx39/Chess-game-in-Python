@@ -1,12 +1,8 @@
 import chess
 from choixMode.choixMode import choixMode
-<<<<<<< HEAD
 import tourDeJeu.tourDeJeu as tdj
 from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
-=======
 from evalBar.evalBar import Eval
-import tourDeJeu.tourDeJeu as tdj
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
 
 class PolyBoard:
 
@@ -18,11 +14,8 @@ class PolyBoard:
         self.WHITE = chess.WHITE
         self.BLACK = chess.BLACK
 
-<<<<<<< HEAD
-=======
         self.eval = Eval()
 
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
 
     def traduction(self, string): #pas besoin de str-ify une str
         if string == "1" :
@@ -71,11 +64,7 @@ class PolyBoard:
             print('Echec et Mat')
             return self.endGame()
         elif self.board.is_stalemate():
-<<<<<<< HEAD
-            print('Pâtes (jsp comment ca s\'ecrit')
-=======
             print('Pat !')
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
             return self.endGame()
 
                  
@@ -90,10 +79,6 @@ class PolyBoard:
                     print("Ce coup n'est pas valide ! \n les coups valides sont : ")
                     print(self.board.legal_moves)
                 coup = input()
-<<<<<<< HEAD
-                #print(coup)
-=======
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
                 askAgain = True
                 if coup == "undo" and self.board.fullmove_number > 1: return "undo"
         except ValueError: #hacky way to do things, but it works
@@ -102,7 +87,6 @@ class PolyBoard:
         return coup
 
 
-<<<<<<< HEAD
     def move_piece(self, pieces_noires_prises, pieces_blanches_prises):
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
@@ -123,16 +107,6 @@ class PolyBoard:
         if coup == "undo": self.coup_precedent()
         self.board.push_san(coup)
         self.detect_echec()
-        
-=======
-    def move_piece(self):
-        #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
-        #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
-        coup = self.ask_move_piece()
-        if coup == "undo": self.coup_precedent()
-        self.board.push_san(coup)
-        self.detect_echec()
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
 
 
     def coup_precedent(self):
@@ -153,18 +127,14 @@ class PolyBoard:
         return self.board.turn
 
 
-<<<<<<< HEAD
-=======
     def printBoard(self):
         self.affichage_plateau()
 
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
     def isGameFinished(self): 
         if self.board.outcome() == None: return False
         return True
 
     def playGame(self):
-<<<<<<< HEAD
         pieces_noires_prises =[]
         pieces_blanches_prises = []
         while not self.isGameFinished():
@@ -175,15 +145,6 @@ class PolyBoard:
             print(pieces_noires_prises)
             print('pieces blanches prises par les noirs')
             print(pieces_blanches_prises)
-=======
-        while not self.isGameFinished():
-            assert self.board.is_valid()
-            self.printBoard()
-            tdj.tourJeu(self)
-            self.eval.update(self.board)
-
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
-
 
     def printBanner(self):
         print("")
@@ -193,14 +154,10 @@ class PolyBoard:
         print("     ██╔═══╝ ██║   ██║██║       ╚██╔╝  ██║     ██╔══██║██╔══╝  ╚════██║╚════██║")
         print("     ██║     ╚██████╔╝███████╗   ██║   ╚██████╗██║  ██║███████╗███████║███████║")
         print("     ╚═╝      ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝")
-<<<<<<< HEAD
-        print("Bienvenu !")
-=======
         print("Bienvenue !")
->>>>>>> cea0c9ea62cdcb31edaf7ef7603047fd7128e5ed
-            
 
-    '''def mvt_possible(self, str):
-        self.board.find_move(from_square: chess.str)
-        print(affichage_plateau(self.board))
-        detect_echec()'''
+
+#    def mvt_possible(self, str):
+#        self.board.find_move(from_square: chess.str)
+#        print(affichage_plateau(self.board))
+#        detect_echec()
