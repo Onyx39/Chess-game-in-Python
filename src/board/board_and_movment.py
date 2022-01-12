@@ -1,9 +1,5 @@
 import chess
 from choixMode.choixMode import choixMode
-<<<<<<< HEAD
-=======
-from evalBar.evalBar import Eval
->>>>>>> main
 import tourDeJeu.tourDeJeu as tdj
 
 class PolyBoard:
@@ -15,11 +11,6 @@ class PolyBoard:
         self.mode = choixMode()
         self.WHITE = chess.WHITE
         self.BLACK = chess.BLACK
-<<<<<<< HEAD
-=======
-
-        self.eval = Eval()
->>>>>>> main
 
 
     def traduction(self, string): #pas besoin de str-ify une str
@@ -69,10 +60,10 @@ class PolyBoard:
             print('Echec et Mat')
             return self.endGame()
         elif self.board.is_stalemate():
-            print('Pat !')
+            print('Pâtes (jsp comment ca s\'ecrit')
             return self.endGame()
 
-                 
+             
     def ask_move_piece(self):
         #ask to move a piece and returns it once the move is legal
         print("enter a move, please (undo to undo)")
@@ -82,8 +73,9 @@ class PolyBoard:
             while(chess.Move.from_uci(coup) not in self.board.legal_moves): #NOTE maybe put it in another func, moveDetect ?
                 if askAgain: 
                     print("Ce coup n'est pas valide ! \n les coups valides sont : ")
-                    print(self.board.legal_moves)
+                    print(self.translate_move())
                 coup = input()
+                print(coup)
                 askAgain = True
                 if coup == "undo" and self.board.fullmove_number > 1: return "undo"
         except ValueError: #hacky way to do things, but it works
@@ -92,12 +84,23 @@ class PolyBoard:
         return coup
 
 
+    def translate_move(self):
+        list_legal_moves = list(self.board.legal_moves)
+        res=[]
+        for i in range (len(list_legal_moves)):
+            list_legal_moves[i]=str(list_legal_moves[i])
+            list_legal_moves[i][15:18]
+            res.append(list_legal_moves[i])
+        return res    
+
+
     def move_piece(self):
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
         coup = self.ask_move_piece()
         if coup == "undo": self.coup_precedent()
         self.board.push_san(coup)
+        print(self.affichage_plateau())
         self.detect_echec()
 
 
@@ -118,8 +121,6 @@ class PolyBoard:
     def getTurn(self):
         return self.board.turn
 
-    def printBoard(self):
-        self.affichage_plateau()
 
     def isGameFinished(self): 
         if self.board.outcome() == None: return False
@@ -129,11 +130,8 @@ class PolyBoard:
         while not self.isGameFinished():
             assert self.board.is_valid()
             self.affichage_plateau()
-            tdj.tourJeu(self)
-            self.printBoard()
-            tdj.tourJeu(self)
-            self.eval.update(self.board)
 
+            tdj.tourJeu(self)
 
     def printBanner(self):
         print("")
@@ -143,7 +141,7 @@ class PolyBoard:
         print("     ██╔═══╝ ██║   ██║██║       ╚██╔╝  ██║     ██╔══██║██╔══╝  ╚════██║╚════██║")
         print("     ██║     ╚██████╔╝███████╗   ██║   ╚██████╗██║  ██║███████╗███████║███████║")
         print("     ╚═╝      ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝")
-        print("Bienvenue !")
+        print("Bienvenu !")
             
 
     '''def mvt_possible(self, str):
