@@ -145,6 +145,7 @@ class PolyBoard:
             print(pieces_noires_prises)
             print('pieces blanches prises par les noirs')
             print(pieces_blanches_prises)
+            self.eval.update(self.board)
 
     def printBanner(self):
         print("")
