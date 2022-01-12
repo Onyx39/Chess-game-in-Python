@@ -139,8 +139,6 @@ class PolyBoard:
 
 
     def printBoard(self):
-        clearConsole = lambda: print('\n' * 50)
-        clearConsole()
         self.affichage_plateau()
 
     def isGameFinished(self): 
@@ -154,6 +152,8 @@ class PolyBoard:
             assert self.board.is_valid()
             self.affichage_plateau()
             tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
+            clearConsole = lambda: print('\n' * 50)
+            clearConsole()
             print('pieces noires prises par les blancs')
             print(pieces_noires_prises)
             print('pieces blanches prises par les noirs')
