@@ -59,7 +59,6 @@ class PolyBoard:
     def detect_echec(self):
         if self.board.is_checkmate() == False and self.board.is_check() == True:
             print('Echec')
-            return self.endGame()
         elif self.board.is_checkmate() == True:
             print('Echec et Mat')
             return self.endGame()
