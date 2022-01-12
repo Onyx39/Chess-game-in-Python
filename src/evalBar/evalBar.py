@@ -9,7 +9,7 @@ class Eval:
             self.engine = chess.engine.SimpleEngine.popen_uci(os.path.abspath("/usr/games/stockfish"))
         else:
             self.engine = chess.engine.SimpleEngine.popen_uci(os.path.abspath(\
-                "./src/evalBar/stockfish_14.1_win_x64_avx2/stockfish_14.1_win_x64_avx2.exe"))
+                "./src/evalBar//stockfish_14.1_win_x64_popcnt/stockfish_14.1_win_x64_popcnt.exe"))
 
     def betterScore(self, res):
         try :
