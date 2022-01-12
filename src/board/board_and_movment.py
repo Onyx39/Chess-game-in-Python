@@ -76,14 +76,14 @@ class PolyBoard:
         try:
             while(chess.Move.from_uci(coup) not in self.board.legal_moves): #NOTE maybe put it in another func, moveDetect ?
                 if askAgain: 
-                    print("Ce coup n'est pas valide ! \n les coups valides sont : ")
-                    print(self.translate_move())
+                    print(col.Fore.RED + col.Style.BRIGHT + "Ce coup n'est pas valide ! \n" + col.Fore.MAGENTA + "Les coups valides sont : ")
+                    print(self.translate_move(), col.Style.RESET_ALL)
                 coup = input()
                 print(coup)
                 askAgain = True
                 if coup == "undo" and self.board.fullmove_number > 1: return "undo"
         except ValueError: #hacky way to do things, but it works
-            print("Ce coup n'est pas valide ! \n recommencez : ")
+            print(col.Fore.RED + col.Style.BRIGHT + "Ce coup n'est pas valide ! \n" + col.Fore.MAGENTA + "recommencez : " + col.Style.RESET_ALL)
             return self.ask_move_piece()
         return coup
 
