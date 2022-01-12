@@ -131,7 +131,7 @@ class PolyBoard:
         if term: term = "blancs"
         elif term: term = "noirs"
         elif term == None: return print("Pat ! GG WP !")
-        return print(f"Les {term} ont gagnés ! GGWP !")
+        return print(f"Les {term} ont gagnés ! GG WP !")
 
 
     def getTurn(self):
@@ -139,6 +139,8 @@ class PolyBoard:
 
 
     def printBoard(self):
+        clearConsole = lambda: print('\n' * 50)
+        clearConsole()
         self.affichage_plateau()
 
     def isGameFinished(self): 
