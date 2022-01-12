@@ -102,7 +102,7 @@ class PolyBoard:
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
         coup = self.ask_move_piece()
-
+        self.clearConsole()
         #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())
         if p != (None, None) :
@@ -146,7 +146,7 @@ class PolyBoard:
         return True
 
     def clearConsole(self) :
-        clearConsole = lambda: print('\n' * 80)
+        clearConsole = lambda: print('\n' * 50)
         clearConsole()
         
     def playGame(self):
@@ -156,7 +156,6 @@ class PolyBoard:
             assert self.board.is_valid()
             self.affichage_plateau()
             tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
-            self.clearConsole()
             print('pieces noires prises par les blancs')
             print(pieces_noires_prises)
             print('pieces blanches prises par les noirs')
