@@ -1,4 +1,5 @@
 import chess
+import colorama as col
 from choixMode.choixMode import choixMode
 import tourDeJeu.tourDeJeu as tdj
 from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
@@ -58,12 +59,12 @@ class PolyBoard:
 
     def detect_echec(self):
         if self.board.is_checkmate() == False and self.board.is_check() == True:
-            print('Echec')
+            print(col.Fore.RED + col.Style.BRIGHT + 'Echec !' + col.Style.RESET_ALL)
         elif self.board.is_checkmate() == True:
-            print('Echec et Mat')
+            print(col.Fore.RED + col.Style.BRIGHT + 'Echec et Mat !' + col.Style.RESET_ALL)
             return self.endGame()
         elif self.board.is_stalemate():
-            print('Pat !')
+            print(col.Fore.RED + col.Style.BRIGHT + 'Pat !' + col.Style.RESET_ALL)
             return self.endGame()
 
                  
@@ -107,10 +108,10 @@ class PolyBoard:
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())
         if p != (None, None) :
             if self.getTurn() == self.WHITE:
-                print("\n les blancs ont prit une piece")
+                print("\nLes blancs ont prit une piece")
                 pieces_noires_prises.append(p[0])
             elif self.getTurn() == self.BLACK:
-                print("\n les noirs ont prit une piece")
+                print("\nLes noirs ont prit une piece")
                 pieces_blanches_prises.append(p[1])
 
 
@@ -156,10 +157,8 @@ class PolyBoard:
             assert self.board.is_valid()
             self.affichage_plateau()
             tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
-            print('pieces noires prises par les blancs')
-            print(pieces_noires_prises)
-            print('pieces blanches prises par les noirs')
-            print(pieces_blanches_prises)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', pieces_noires_prises, col.Style.RESET_ALL)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', pieces_blanches_prises, col.Style.RESET_ALL)
             self.eval.update(self.board)
 
     def printBanner(self):
