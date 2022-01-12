@@ -45,8 +45,8 @@ def AffichagePiecesPrises(board, mouvement, b_transforme, compteur_tour) :
     
     l = 0
     col = 0
-    piece_blanche_prise = None
-    piece_noire_prise = None
+    joueur_noir_piece_blanche_prise = None
+    joueur_blanc_piece_noire_prise = None
 
     l = 8-int(mouvement[3])
 
@@ -69,7 +69,7 @@ def AffichagePiecesPrises(board, mouvement, b_transforme, compteur_tour) :
     
 
     if b_transforme[l][col] == '.' : # board.is_en_passant(chess.Move(mouvement)) == False :
-        return None
+        return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
     else : 
         if False and board.is_en_passant(chess.Move(mouvement)) == True :
             if compteur_tour %2 == 1 :
@@ -77,16 +77,22 @@ def AffichagePiecesPrises(board, mouvement, b_transforme, compteur_tour) :
             else :
                 piece_noire_prise = b_transforme[l+1][col] 
         elif compteur_tour %2 == 1 :
-            piece_blanche_prise = b_transforme[l][col]
+            if b_transforme[l][col] == 'r' :
+                return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+            else :
+                joueur_noir_piece_blanche_prise = b_transforme[l][col]
         else :
-            piece_noire_prise = b_transforme[l][col]
+            if b_transforme[l][col] == 'R' :
+                return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
+            else :
+                joueur_blanc_piece_noire_prise = b_transforme[l][col]
 
-    return piece_blanche_prise, piece_noire_prise
+    return joueur_noir_piece_blanche_prise, joueur_blanc_piece_noire_prise
 
 
 if __name__ == '__main__' :
     
-    #TEST TRANSFORMATION MATRICE
+    #TEST TRANSFORMATION MATRICE ET AFFICHAGE DES PIECES PRISE MOUVEMENT SIMPLE
 
     board = chess.Board("r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4")
     b = TransformationenMatrice(board)

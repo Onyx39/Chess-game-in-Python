@@ -1,5 +1,9 @@
 import chess
 from choixMode.choixMode import choixMode
+<<<<<<< HEAD
+=======
+from evalBar.evalBar import Eval
+>>>>>>> main
 import tourDeJeu.tourDeJeu as tdj
 
 class PolyBoard:
@@ -11,6 +15,11 @@ class PolyBoard:
         self.mode = choixMode()
         self.WHITE = chess.WHITE
         self.BLACK = chess.BLACK
+<<<<<<< HEAD
+=======
+
+        self.eval = Eval()
+>>>>>>> main
 
 
     def traduction(self, string): #pas besoin de str-ify une str
@@ -60,7 +69,7 @@ class PolyBoard:
             print('Echec et Mat')
             return self.endGame()
         elif self.board.is_stalemate():
-            print('Pâtes (jsp comment ca s\'ecrit')
+            print('Pat !')
             return self.endGame()
 
                  
@@ -75,7 +84,6 @@ class PolyBoard:
                     print("Ce coup n'est pas valide ! \n les coups valides sont : ")
                     print(self.board.legal_moves)
                 coup = input()
-                print(coup)
                 askAgain = True
                 if coup == "undo" and self.board.fullmove_number > 1: return "undo"
         except ValueError: #hacky way to do things, but it works
@@ -90,7 +98,6 @@ class PolyBoard:
         coup = self.ask_move_piece()
         if coup == "undo": self.coup_precedent()
         self.board.push_san(coup)
-        print(self.affichage_plateau())
         self.detect_echec()
 
 
@@ -111,6 +118,8 @@ class PolyBoard:
     def getTurn(self):
         return self.board.turn
 
+    def printBoard(self):
+        self.affichage_plateau()
 
     def isGameFinished(self): 
         if self.board.outcome() == None: return False
@@ -120,8 +129,11 @@ class PolyBoard:
         while not self.isGameFinished():
             assert self.board.is_valid()
             self.affichage_plateau()
-
             tdj.tourJeu(self)
+            self.printBoard()
+            tdj.tourJeu(self)
+            self.eval.update(self.board)
+
 
     def printBanner(self):
         print("")
@@ -131,7 +143,7 @@ class PolyBoard:
         print("     ██╔═══╝ ██║   ██║██║       ╚██╔╝  ██║     ██╔══██║██╔══╝  ╚════██║╚════██║")
         print("     ██║     ╚██████╔╝███████╗   ██║   ╚██████╗██║  ██║███████╗███████║███████║")
         print("     ╚═╝      ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝")
-        print("Bienvenu !")
+        print("Bienvenue !")
             
 
     '''def mvt_possible(self, str):
