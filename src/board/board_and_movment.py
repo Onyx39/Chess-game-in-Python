@@ -3,7 +3,7 @@ import colorama as col
 from choixMode.choixMode import choixMode
 import tourDeJeu.tourDeJeu as tdj
 from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
-from evalBar.evalBar import Eval
+#from evalBar.evalBar import Eval
 
 class PolyBoard:
 
@@ -15,7 +15,7 @@ class PolyBoard:
         self.WHITE = chess.WHITE
         self.BLACK = chess.BLACK
 
-        self.eval = Eval()
+        #self.eval = Eval()
 
 
     def traduction(self, string): #pas besoin de str-ify une str
@@ -159,7 +159,7 @@ class PolyBoard:
             tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
             print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', pieces_noires_prises, col.Style.RESET_ALL)
             print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', pieces_blanches_prises, col.Style.RESET_ALL)
-            self.eval.update(self.board)
+            #self.eval.update(self.board)
 
     def printBanner(self):
         print("")
