@@ -1,27 +1,25 @@
 #code tour de jeu
 import chess
 
-from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
 
-
-def tourJeu(board, pieces_noires_prises, pieces_blanches_prises):
+def tourJeu(PolyBoard, ia):
 
     numero_tour_joueur = 0
     askAgain = False
 
-    if board.mode == True:
-        if not board.isGameFinished():      
-            if board.getTurn() == board.WHITE:
+    if PolyBoard.mode == True:
+        if not PolyBoard.isGameFinished():      
+            if PolyBoard.getTurn() == PolyBoard.WHITE:
                 print("C'est au tour des blancs")
-                board.move_piece(pieces_noires_prises, pieces_blanches_prises)
+                PolyBoard.askMovePieceAndMoveIt()
 
             else:
                 print("C'est au tour des noirs")
-                board.move_piece(pieces_noires_prises, pieces_blanches_prises)
+                PolyBoard.askMovePieceAndMoveIt()
 
     else : 
-        if board.getTurn() == board.WHITE:
-            if board.isGameFinished() == False:
-                board.move_piece(pieces_noires_prises, pieces_blanches_prises)
+        if not PolyBoard.isGameFinished():
+            if PolyBoard.getTurn() == PolyBoard.WHITE:
+                PolyBoard.askMovePieceAndMoveIt()
             else:
-                pass
+                ia.playMove(PolyBoard)

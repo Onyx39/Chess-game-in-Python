@@ -3,6 +3,7 @@ import platform
 import os
 import subprocess
 import re
+import colorama as col
 
 class Eval:
     def __init__(self):
@@ -18,15 +19,15 @@ class Eval:
     def betterScore(self, res):
         try :
             if res.relative > chess.engine.Cp(0):
-                print(f"White is winning by {res.white().score()/100}")
+                print("White is winning by " + col.Fore.GREEN + col.Style.BRIGHT + str(res.white().score()/100) + col.Style.RESET_ALL)
             elif res.relative < chess.engine.Cp(0): 
-                print(f"Black is winning by {res.black().score()/100}")
+                print("Black is winning by" + col.Fore.RED + col.Style.BRIGHT + str(res.black().score()/100) + col.Style.RESET_ALL)
             else:print("The position is equal")
         except TypeError : #hacky but works #TODO better if time
             if res.relative > chess.engine.Cp(0):
-                print(f"White is winning by {res.white().score()}")
+                print("White has" + col.Fore.GREEN + col.Style.BRIGHT + str(res.white().score()) + col.Style.RESET_ALL)
             elif res.relative < chess.engine.Cp(0): 
-                print(f"Black is winning by {res.black().score()}")
+                print("Black has" + col.Fore.RED + col.Style.BRIGHT + str(res.black().score()) + col.Style.RESET_ALL)
             
 
     def update(self, board):

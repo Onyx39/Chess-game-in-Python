@@ -1,5 +1,6 @@
 import chess
 import chess.polyglot
+import colorama as col
 
 class OpeningBook:
     def __init__(self):
@@ -9,7 +10,7 @@ class OpeningBook:
     def entry(self, board):
         if not self.stop:
             try:
-                print("The best move is :", self.book.find(board).move)
+                print("The opening book says : " + col.Fore.MAGENTA + col.Style.BRIGHT + str(self.book.find(board).move) + col.Style.RESET_ALL)
             except (IndexError, ValueError):
-                print("This move is so dumb i don't even have an entry in my perfet(tm) book opening")
+                print("The opening book has no entry for this move !")
                 self.stop = True

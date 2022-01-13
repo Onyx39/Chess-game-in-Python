@@ -4,6 +4,7 @@ from choixMode.choixMode import choixMode
 import tourDeJeu.tourDeJeu as tdj
 from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
 from evalBar.evalBar import Eval
+from ia.ia import Ia
 from openingBook.openingBook import OpeningBook
 from os import system, name
 
@@ -20,7 +21,11 @@ class PolyBoard:
         self.eval = Eval()
         self.book = OpeningBook()
 
+        self.ia = Ia()
+
         col.init()
+        self.pieces_noires_prises = []
+        self.pieces_blanches_prises = []
 
 
     def traduction(self, string): #pas besoin de str-ify une str
@@ -73,26 +78,6 @@ class PolyBoard:
             return self.endGame()
 
 
-    def ask_move_piece(self):
-        #ask to move a piece and returns it once the move is legal
-        print("enter a move, please (undo to undo)")
-        askAgain = False
-        coup = "0000"
-        try:
-            while(chess.Move.from_uci(coup) not in self.board.legal_moves): #NOTE maybe put it in another func, moveDetect ?
-                if askAgain: 
-                    print(col.Fore.RED + col.Style.BRIGHT + "Ce coup n'est pas valide ! \n" + col.Fore.MAGENTA + "Les coups valides sont : ")
-                    print(self.translate_move(), col.Style.RESET_ALL)
-                coup = input()
-                print(coup)
-                askAgain = True
-                if coup == "undo" and self.board.fullmove_number > 1: return "undo"
-        except ValueError: #hacky way to do things, but it works
-            print(col.Fore.RED + col.Style.BRIGHT + "Ce coup n'est pas valide ! \n" + col.Fore.MAGENTA + "recommencez : " + col.Style.RESET_ALL)
-            return self.ask_move_piece()
-        return coup
-
-
     def translate_move(self):
         list_legal_moves = list(self.board.legal_moves)
         res=[]
@@ -103,26 +88,48 @@ class PolyBoard:
         return res
 
 
+    def ask_move_piece(self):
+        #ask to move a piece and returns it once the move is legal
+        print("enter a move, please (undo to undo)")
+        askAgain = False
+        coup = "0000"
+        try:
+            while(chess.Move.from_uci(coup) not in self.board.legal_moves): #NOTE maybe put it in another func, moveDetect ?
+                print(col.Fore.MAGENTA + "Les coups valides sont : ")
+                print(self.translate_move(), col.Style.RESET_ALL)
+                coup = input()
+                print(coup)
+                askAgain = True
+        except ValueError: #hacky way to do things, but it works
+            print(col.Fore.RED + col.Style.BRIGHT + "Ce coup n'est pas valide ! \n" + col.Style.RESET_ALL)
+            return self.ask_move_piece()
+        return coup
 
-    def move_piece(self, pieces_noires_prises, pieces_blanches_prises):#TODO put peices as attribut
+
+    def move_piece(self, coup):#TODO put peices as attribut
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
-        coup = self.ask_move_piece() #TODO faire l'inverse, pour movePiece(self, coup)
+        #TODO faire l'inverse, pour movePiece(self, coup)
         #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())#NOTE wrong name
         if p != (None, None) :
             if self.getTurn() == self.WHITE:
                 print("\nLes blancs ont prit une piece")
-                pieces_noires_prises.append(p[0])
+                self.pieces_noires_prises.append(p[0])
             elif self.getTurn() == self.BLACK:
                 print("\nLes noirs ont prit une piece")
-                pieces_blanches_prises.append(p[1])
+                self.pieces_blanches_prises.append(p[1])
 
-
-
-        if coup == "undo": self.coup_precedent()
         self.board.push_san(coup)
         self.detect_echec()
+
+
+    def move_pieceAI(self, move):
+        self.board.push(move)
+
+
+    def askMovePieceAndMoveIt(self):
+        self.move_piece(self.ask_move_piece())
 
 
     def coup_precedent(self):
@@ -161,17 +168,16 @@ class PolyBoard:
 
         
     def playGame(self):
-        pieces_noires_prises =[]
-        pieces_blanches_prises = []
         while not self.isGameFinished():
             assert self.board.is_valid()
-            self.clearConsole() #NOTE is it better to refresh now or after ? does it matter ?
-            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', pieces_noires_prises, col.Style.RESET_ALL)
-            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', pieces_blanches_prises, col.Style.RESET_ALL)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', self.pieces_noires_prises, col.Style.RESET_ALL)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', self.pieces_blanches_prises, col.Style.RESET_ALL)
+            self.affichage_plateau()
             self.book.entry(self.board)
             self.eval.update(self.board)
-            self.affichage_plateau()
-            tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
+            tdj.tourJeu(self, self.ia)
+            self.clearConsole()
+
 
     def printBanner(self):
         print("")
