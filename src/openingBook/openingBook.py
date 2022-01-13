@@ -1,9 +1,15 @@
 import chess
 import chess.polyglot
-from src.board.board_and_movment import board 
 
-Book = chess.polyglot.MemortyMapperReader("./Perfect_2021/Perfect2021.bin")
+class OpeningBook:
+    def __init__(self):
+        self.book = chess.polyglot.MemoryMappedReader("./src/openingBook/Perfect_2021/BIN/Perfect2021.bin")
+        self.stop = False
 
-Book.find_all()
-res = Book.find(board)
-print(res)
+    def entry(self, board):
+        if not self.stop:
+            try:
+                print("The best move is :", self.book.find(board).move)
+            except ValueError:
+                print("This move is so dumb i don't even have an entry \
+                        in my perfet(tm) book opening")

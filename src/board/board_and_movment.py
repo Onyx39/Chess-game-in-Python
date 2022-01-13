@@ -4,6 +4,8 @@ from choixMode.choixMode import choixMode
 import tourDeJeu.tourDeJeu as tdj
 from affichagePiecesPrises.affichage_prises import AffichagePiecesPrises, TransformationenMatrice
 from evalBar.evalBar import Eval
+from openingBook.openingBook import OpeningBook
+from os import system, name
 
 class PolyBoard:
 
@@ -16,6 +18,9 @@ class PolyBoard:
         self.BLACK = chess.BLACK
 
         self.eval = Eval()
+        self.book = OpeningBook()
+
+        col.init()
 
 
     def traduction(self, string): #pas besoin de str-ify une str
@@ -95,17 +100,16 @@ class PolyBoard:
             list_legal_moves[i]=str(list_legal_moves[i])
             list_legal_moves[i][15:18]
             res.append(list_legal_moves[i])
-        return res    
+        return res
 
 
 
-    def move_piece(self, pieces_noires_prises, pieces_blanches_prises):
+    def move_piece(self, pieces_noires_prises, pieces_blanches_prises):#TODO put peices as attribut
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
-        coup = self.ask_move_piece()
-        self.clearConsole()
+        coup = self.ask_move_piece() #???? 
         #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
-        p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())
+        p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())#NOTE wrong name
         if p != (None, None) :
             if self.getTurn() == self.WHITE:
                 print("\nLes blancs ont prit une piece")
@@ -147,19 +151,27 @@ class PolyBoard:
         return True
 
     def clearConsole(self) :
-        clearConsole = lambda: print('\n' * 50)
-        clearConsole()
+        # for windows
+        if name == 'nt':
+            _ = system('cls')
+      
+        # for mac and linux(here, os.name is 'posix')
+        else:
+            _ = system('clear')
+
         
     def playGame(self):
         pieces_noires_prises =[]
         pieces_blanches_prises = []
         while not self.isGameFinished():
             assert self.board.is_valid()
-            self.affichage_plateau()
-            tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
+            self.clearConsole() #NOTE is it better to refresh now or after ? does it matter ?
             print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', pieces_noires_prises, col.Style.RESET_ALL)
             print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', pieces_blanches_prises, col.Style.RESET_ALL)
+            self.book.entry(self.board)
             self.eval.update(self.board)
+            self.affichage_plateau()
+            tdj.tourJeu(self, pieces_noires_prises, pieces_blanches_prises)
 
     def printBanner(self):
         print("")
