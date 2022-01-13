@@ -11,5 +11,5 @@ class OpeningBook:
             try:
                 print("The best move is :", self.book.find(board).move)
             except (IndexError, ValueError):
-                print("This move is so dumb i don't even have an entry \
-                        in my perfet(tm) book opening")
+                print("This move is so dumb i don't even have an entry in my perfet(tm) book opening")
+                self.stop = True
