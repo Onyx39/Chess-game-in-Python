@@ -72,7 +72,7 @@ class PolyBoard:
             print(col.Fore.RED + col.Style.BRIGHT + 'Pat !' + col.Style.RESET_ALL)
             return self.endGame()
 
-                 
+
     def ask_move_piece(self):
         #ask to move a piece and returns it once the move is legal
         print("enter a move, please (undo to undo)")
@@ -107,7 +107,7 @@ class PolyBoard:
     def move_piece(self, pieces_noires_prises, pieces_blanches_prises):#TODO put peices as attribut
         #x est du type "'case de départ' 'case d'arrivée'" (ex: 'e2e3' bouge la piece de e2 à e3)
         #pour roque, il suffit de bouger le roi sur la case ou est presente une tou 
-        coup = self.ask_move_piece() #???? 
+        coup = self.ask_move_piece() #TODO faire l'inverse, pour movePiece(self, coup)
         #la fonction affichage piece doit etre executee avant le coup car elle regarde la piece a l arrivee du coup
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())#NOTE wrong name
         if p != (None, None) :

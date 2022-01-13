@@ -3,7 +3,7 @@ import chess.polyglot
 
 class OpeningBook:
     def __init__(self):
-        self.book = chess.polyglot.MemoryMappedReader("./src/openingBook/Perfect_2021/BIN/Perfect2021.bin")
+        self.book = chess.polyglot.MemoryMappedReader("./openingBook/Perfect_2021/BIN/Perfect2021.bin")
         self.stop = False
 
     def entry(self, board):
