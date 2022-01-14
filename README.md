@@ -7,6 +7,10 @@ It is a chess engine written in python (*ew*) but should work just fine
 pip install -U -r requirements.txt
 ```
 
+## Unix like system
+Unix like systems (mac / linux / openbsd / ...) users will have to install stockfish.
+Do so using your distro's package manager, snap or yaourt.
+
 ## Run
 ```shell
 python src/main.py

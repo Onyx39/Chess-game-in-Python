@@ -10,11 +10,11 @@ def tourJeu(PolyBoard, ia):
     if PolyBoard.mode == True:
         if not PolyBoard.isGameFinished():      
             if PolyBoard.getTurn() == PolyBoard.WHITE:
-                print("C'est au tour des blancs")
+                print("White's turn to move")
                 PolyBoard.askMovePieceAndMoveIt()
 
             else:
-                print("C'est au tour des noirs")
+                print("Black's turn to move")
                 PolyBoard.askMovePieceAndMoveIt()
 
     else : 

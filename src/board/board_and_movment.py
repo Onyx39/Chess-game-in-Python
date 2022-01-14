@@ -114,10 +114,10 @@ class PolyBoard:
         p = AffichagePiecesPrises(self, coup, TransformationenMatrice(self), self.getTurn())#NOTE wrong name
         if p != (None, None) :
             if self.getTurn() == self.WHITE:
-                print("\nLes blancs ont prit une piece")
+                print("\nWhite has taken a piece")
                 self.pieces_noires_prises.append(p[0])
             elif self.getTurn() == self.BLACK:
-                print("\nLes noirs ont prit une piece")
+                print("\nBlack has taken a piece")
                 self.pieces_blanches_prises.append(p[1])
 
         self.board.push_san(coup)
@@ -170,8 +170,8 @@ class PolyBoard:
     def playGame(self):
         while not self.isGameFinished():
             assert self.board.is_valid()
-            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces noires prises par les blancs : ', self.pieces_noires_prises, col.Style.RESET_ALL)
-            print(col.Fore.CYAN + col.Style.BRIGHT + 'Pieces blanches prises par les noirs : ', self.pieces_blanches_prises, col.Style.RESET_ALL)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'Black pieces taken : ', self.pieces_noires_prises, col.Style.RESET_ALL)
+            print(col.Fore.CYAN + col.Style.BRIGHT + 'White pieces taken : ', self.pieces_blanches_prises, col.Style.RESET_ALL)
             self.affichage_plateau()
             self.book.entry(self.board)
             self.eval.update(self.board)
