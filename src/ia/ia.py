@@ -2,6 +2,7 @@ import platform
 import chess.engine
 import subprocess
 import re
+import os
 
 class Ia:
     def __init__(self):
